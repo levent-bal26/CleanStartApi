@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// ✅ Controller desteğini AÇ
+builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -21,18 +24,21 @@ var products = new[]
     new Product(3, "Silgi", 5)
 };
 
-// Health
+// Health (Minimal API)
 app.MapGet("/api/health", () => Results.Ok("OK"));
 
-// Liste
+// Liste (Minimal API)
 app.MapGet("/api/products", () => Results.Ok(products));
 
-// Tek ürün
+// Tek ürün (Minimal API)
 app.MapGet("/api/products/{id:int}", (int id) =>
 {
     var product = products.FirstOrDefault(p => p.Id == id);
     return product is null ? Results.NotFound() : Results.Ok(product);
 });
+
+// ✅ Controller endpoint’lerini BAĞLA
+app.MapControllers();
 
 app.Run();
 
