@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using CleanStartApi.Data;
 var builder = WebApplication.CreateBuilder(args);
-
 // ✅ Controller desteğini AÇ
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
